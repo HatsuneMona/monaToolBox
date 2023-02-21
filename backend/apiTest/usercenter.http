@@ -1,0 +1,15 @@
+### test CROS
+
+GET http://192.168.58.101:12888/ping
+
+### register
+
+POST http://192.168.58.101:12888/usercenter/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "loginName": "shoumiao",
+  "name":"萌奈！",
+  "mobile": "19912344321",
+  "password":"12345678"
+}

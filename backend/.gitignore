@@ -1,0 +1,8 @@
+config.yaml
+*.exe
+
+go.sum
+
+.DS_Store
+.idea
+.vscode
