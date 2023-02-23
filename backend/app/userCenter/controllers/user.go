@@ -34,6 +34,7 @@ func Login(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&form); err != nil {
 		response.ValidateFail(c, validator.GetErrorMsg(form, err))
+		return
 	}
 
 	if err, user := service.UserService.Login(form); err != nil {
