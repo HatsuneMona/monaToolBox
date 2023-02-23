@@ -68,6 +68,7 @@ func initMysqlGorm() *gorm.DB {
 func initDbTables(db *gorm.DB) {
 	if err := db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4").AutoMigrate(
 		models.User{},
+		models.TinyUrl{},
 	); err != nil {
 		global.Log.Error("migrate tables failed.", zap.Any("err", err))
 		os.Exit(-1)
