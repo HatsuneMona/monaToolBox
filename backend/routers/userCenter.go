@@ -1,18 +1,17 @@
-package userCenter
+package routers
 
 import (
 	"github.com/gin-gonic/gin"
 	"monaToolBox/app/userCenter/controllers"
 	"monaToolBox/middleware"
-	"net/http"
 )
 
-func UserCenterRouter(root *gin.RouterGroup) {
-	// usercenter
+func userCenterRouter(root *gin.RouterGroup) {
+	// userCenter
 
-	root.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong!")
-	})
+	//root.GET("/ping", func(c *gin.Context) {
+	//	c.String(http.StatusOK, "pong!")
+	//})
 
 	root.POST("/register", controllers.Register)
 	root.POST("/login", controllers.Login)

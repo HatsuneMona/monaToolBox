@@ -3,12 +3,12 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"monaToolBox/middleware"
-	"monaToolBox/routers/userCenter"
 	"net/http"
 )
 
 func GinRootRouter() *gin.Engine {
 	root := gin.Default()
+	//root := gin.New()
 
 	root.Use(middleware.AllowCors)
 
@@ -18,7 +18,17 @@ func GinRootRouter() *gin.Engine {
 		},
 	)
 
-	userCenter.UserCenterRouter(root.Group("/usercenter"))
+	adminRouter(root.Group("/admin"))
+	tinyUrlRouter(root.Group("/tu"))
 
 	return root
+}
+
+func adminRouter(root *gin.RouterGroup) {
+	root.Use(middleware.AdminOperateLog())
+
+	userCenterRouter(root.Group("/userCenter"))
+
+	tinyUrlAdminRouter(root.Group("/tinyUrl"))
+
 }
