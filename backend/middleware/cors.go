@@ -1,10 +1,11 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/contrib/cors"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"monaToolBox/global"
 	"net/http"
+	"time"
 )
 
 func AllowCors(c *gin.Context) {
@@ -23,5 +24,13 @@ func AllowCors(c *gin.Context) {
 }
 
 func GinCors() gin.HandlerFunc {
-	return cors.Default()
+
+	return cors.New(cors.Config{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"POST", "GET", "OPTIONS", "PUT", "DELETE", "UPDATE"},
+		AllowHeaders:     []string{"Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Cache-Control", "Content-Language", "Content-Type"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	})
 }
