@@ -10,7 +10,7 @@ func GinRootRouter() *gin.Engine {
 	root := gin.Default()
 	//root := gin.New()
 
-	root.Use(middleware.AllowCors)
+	root.Use(middleware.GinCors())
 
 	root.GET(
 		"/ping", func(c *gin.Context) {

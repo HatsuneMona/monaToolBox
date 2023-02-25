@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/gin-gonic/contrib/cors"
 	"github.com/gin-gonic/gin"
 	"monaToolBox/global"
 	"net/http"
@@ -19,4 +20,8 @@ func AllowCors(c *gin.Context) {
 		global.Log.Info("Method Options, allow all CORS.")
 		c.AbortWithStatus(http.StatusNoContent)
 	}
+}
+
+func GinCors() gin.HandlerFunc {
+	return cors.Default()
 }
