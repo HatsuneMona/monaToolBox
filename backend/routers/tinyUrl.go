@@ -1,10 +1,14 @@
 package routers
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"monaToolBox/app/tinyUrl/controllers"
+)
 
 func tinyUrlAdminRouter(root *gin.RouterGroup) {
+	// /tinyUrl
 	root.GET("/list")
-	root.GET("/:id")
+	root.GET("/:id", controllers.GetInfo())
 
 	root.POST("/add")
 	root.POST("/modify/:id")
