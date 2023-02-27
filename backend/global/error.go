@@ -1,18 +1,26 @@
 package global
 
+import "fmt"
+
 type CustomError struct {
 	ErrorCode int
 	ErrorMsg  string
 }
 
-type CustomErrors struct {
+var HandlerErrors = struct {
 	ValidateError    CustomError
-	ServiceError     CustomError
 	ClaimsTokenError CustomError
+}{
+	ValidateError:    CustomError{40001, "请求参数错误"},
+	ClaimsTokenError: CustomError{40002, "登录鉴权失败"},
 }
 
-var Errors = CustomErrors{
-	ValidateError:    CustomError{40001, "请求参数错误"},
-	ServiceError:     CustomError{50001, "service错误"},
-	ClaimsTokenError: CustomError{40002, "登录鉴权失败"},
+var ServiceErrors = struct {
+	ServiceError CustomError
+}{
+	ServiceError: CustomError{50001, "service错误"},
+}
+
+func (ce CustomError) Error() string {
+	return fmt.Sprint(ce.ErrorCode, ", ", ce.ErrorMsg)
 }

@@ -23,7 +23,7 @@ func GetInfo() gin.HandlerFunc {
 		id, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
 			global.Log.Warn("tinyUrl.GetInfo input id error.", zap.String("id", c.Param("id")))
-			response.FailByError(c, global.Errors.ValidateError)
+			response.FailByError(c, global.HandlerErrors.ValidateError)
 			return
 		}
 		err, tuInfo := service.TinyUrlService.GetById(id)

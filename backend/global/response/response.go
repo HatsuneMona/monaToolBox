@@ -41,15 +41,15 @@ func FailByError(c *gin.Context, error global.CustomError) {
 
 // ValidateFail 请求参数验证失败
 func ValidateFail(c *gin.Context, msg string) {
-	Fail(c, global.Errors.ValidateError.ErrorCode, msg)
+	Fail(c, global.HandlerErrors.ValidateError.ErrorCode, msg)
 }
 
 // ServiceFail 调用service失败
 func ServiceFail(c *gin.Context, msg string) {
-	Fail(c, global.Errors.ServiceError.ErrorCode, msg)
+	Fail(c, global.ServiceErrors.ServiceError.ErrorCode, msg)
 }
 
 // ClaimsTokenFail jwt鉴权失败
 func ClaimsTokenFail(c *gin.Context) {
-	Fail(c, global.Errors.ClaimsTokenError.ErrorCode, global.Errors.ClaimsTokenError.ErrorMsg)
+	Fail(c, global.HandlerErrors.ClaimsTokenError.ErrorCode, global.HandlerErrors.ClaimsTokenError.ErrorMsg)
 }
