@@ -19,16 +19,18 @@ func GinRootRouter() *gin.Engine {
 	)
 
 	adminRouter(root.Group("/admin"))
+
 	tinyUrlRouter(root.Group("/tu"))
+	userCenterRouter(root.Group("/userCenter"))
 
 	return root
 }
 
 func adminRouter(root *gin.RouterGroup) {
 	root.Use(middleware.AdminOperateLog())
+	root.Use(middleware.JwtAuth)
 
-	userCenterRouter(root.Group("/userCenter"))
-
+	userCenterAdminRouter(root.Group("/userCenter"))
 	tinyUrlAdminRouter(root.Group("/tinyUrl"))
 
 }
