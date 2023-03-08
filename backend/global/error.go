@@ -17,8 +17,10 @@ var HandlerErrors = struct {
 
 var ServiceErrors = struct {
 	ServiceError CustomError
+	ParamError   CustomError
 }{
 	ServiceError: CustomError{50001, "service错误"},
+	ParamError:   CustomError{50002, "service调用参数错误"},
 }
 
 func (ce CustomError) Error() string {
