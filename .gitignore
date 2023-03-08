@@ -1,2 +1,9 @@
 
-vue-element-admin/
+config.yaml
+*.exe
+
+go.sum
+
+.DS_Store
+.idea
+.vscode
