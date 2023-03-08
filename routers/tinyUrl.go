@@ -18,5 +18,5 @@ func tinyUrlAdminRouter(root *gin.RouterGroup) {
 }
 
 func tinyUrlRouter(root *gin.RouterGroup) {
-	root.GET("/:tinyUrl")
+	root.GET("/:tinyUrl", controllers.TinyUrlRedirect())
 }
