@@ -26,3 +26,7 @@ func (a AddTinyUrlForm) GetMessages() validator.ValidatorMassages {
 		"original_url.required": "目标Url不能为空",
 	}
 }
+
+type AddTinyUrlResp struct {
+	Id uint `json:"id"`
+}

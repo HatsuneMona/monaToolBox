@@ -4,12 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
-	"monaToolBox/app/tinyUrl/service"
+	. "monaToolBox/app/tinyUrl/service"
 	"monaToolBox/app/tinyUrl/types"
 	"monaToolBox/global"
 	"monaToolBox/global/response"
 	"monaToolBox/global/validator"
+	"monaToolBox/models"
 	"strconv"
+	"time"
 )
 
 func List() gin.HandlerFunc {
@@ -26,7 +28,7 @@ func GetInfo() gin.HandlerFunc {
 			response.FailByError(c, global.HandlerErrors.ValidateError)
 			return
 		}
-		err, tuInfo := service.TinyUrlService.GetById(id)
+		err, tuInfo := TinyUrlService.GetById(id)
 		if err != nil {
 			if err != gorm.ErrRecordNotFound {
 				global.Log.Error("service.TinyUrlService error.", zap.Error(err))
@@ -56,6 +58,35 @@ func Add() gin.HandlerFunc {
 			return
 		}
 
+		tinyUrlInfo := models.TinyUrl{
+			TinyUrl:         form.TinyUrl,
+			OriginalUrl:     form.OriginalUrl,
+			LimitAccessTime: form.LimitAccessTime,
+		}
+		if tinyUrlInfo.LimitAccessTime.IsZero() {
+			tinyUrlInfo.LimitAccessTime = time.Date(2099, 01, 01, 00, 00, 00, 00, time.Local)
+		}
+
+		// 检查存在性
+		if err, tinyUrlInfos := TinyUrlService.GetByTinyRouteList([]string{form.TinyUrl}); err != nil {
+			global.Log.Error("TinyUrlService.GetByTinyRouteList server error.", zap.Error(err), zap.Strings("input", []string{form.TinyUrl}))
+			response.ServiceFail(c)
+			return
+
+		} else if len(tinyUrlInfos) > 0 {
+			response.FailByError(c, types.HandlerErrors.Conflict, form.TinyUrl)
+			return
+		}
+
+		err, tinyUrls := TinyUrlService.AddNewTinyUrlBatch([]models.TinyUrl{tinyUrlInfo})
+		if err != nil {
+			global.Log.Error("TinyUrlService.AddNewTinyUrlBatch server error.", zap.Error(err), zap.Any("input", []string{form.TinyUrl}))
+			response.FailByError(c, global.ServiceErrors.ServiceError)
+			return
+		}
+
+		response.Success(c, types.AddTinyUrlResp{Id: tinyUrls[0].Id})
+		return
 	}
 }
 

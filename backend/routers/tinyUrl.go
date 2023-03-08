@@ -10,7 +10,7 @@ func tinyUrlAdminRouter(root *gin.RouterGroup) {
 	root.GET("/list")
 	root.GET("/:id", controllers.GetInfo())
 
-	root.POST("/add")
+	root.POST("/add", controllers.Add())
 	root.POST("/modify/:id")
 
 	root.DELETE("/:id")
