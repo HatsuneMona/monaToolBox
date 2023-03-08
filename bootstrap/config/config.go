@@ -2,11 +2,12 @@ package config
 
 // Config 应用根配置
 type Config struct {
-	Server   Server   `mapstructure:"server" json:"env" yaml:"env"`
-	Log      Log      `mapstructure:"log" json:"log" yaml:"log"`
-	Database Database `mapstructure:"database" json:"database" yaml:"database"`
-	Jwt      Jwt      `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
-	Redis    Redis    `mapstructure:"redis" json:"redis" yaml:"redis"`
+	Server    Server    `mapstructure:"server" json:"env" yaml:"env"`
+	Log       Log       `mapstructure:"log" json:"log" yaml:"log"`
+	Database  Database  `mapstructure:"database" json:"database" yaml:"database"`
+	Jwt       Jwt       `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
+	Redis     Redis     `mapstructure:"redis" json:"redis" yaml:"redis"`
+	Memcached Memcached `mapstructure:"memcached" json:"memcached" yaml:"memcached"`
 }
 
 type Database struct {
@@ -55,4 +56,8 @@ type Redis struct {
 type Server struct {
 	Listen string `mapstructure:"listen" json:"listen" yaml:"listen"` // 监听地址
 	Port   string `mapstructure:"port" json:"port" yaml:"port"`       // 监听端口
+}
+
+type Memcached struct {
+	ServerList []string `mapstructure:"server_list" json:"server_list" yaml:"server_list"` // ip:port   如果多次加入同一个server，那么它的权重会增大
 }

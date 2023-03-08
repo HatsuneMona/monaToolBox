@@ -30,3 +30,14 @@ database:
 jwt:
   secret: qwertyuiopasdfghjklzxcvbnm13245646897798789   # 瞎写，写长点，不要泄露，以保证jwt的安全性
   jwt_ttl: 3600  # 秒
+
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  db: 0
+  password: 123456789@qwertyuiopxxa
+
+memcached:
+  server_list:
+    - 127.0.0.1:12365
