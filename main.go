@@ -25,6 +25,10 @@ func main() {
 	global.Redis = bootstrap.InitializeRedis()
 	global.Log.Info("redis database system init ok.")
 
+	// 初始化memCached
+	global.MemCached = bootstrap.InitializeMemcached()
+	global.Log.Info("memCached system init ok.")
+
 	// 初始化验证器
 	bootstrap.InitializeValidator()
 	global.Log.Info("Initialize Validator system init ok.")
