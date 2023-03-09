@@ -8,6 +8,7 @@ import (
 	"monaToolBox/global"
 	"monaToolBox/global/response"
 	"net/http"
+	"time"
 )
 
 // TinyUrlRedirect 访问短链，进行重定向
@@ -21,6 +22,7 @@ func TinyUrlRedirect() gin.HandlerFunc {
 		}
 
 		err, tinyList := TinyUrlService.GetByTinyRouteList([]string{tinyStr})
+		tinyInfo := tinyList[0]
 		if err != nil {
 			global.Log.Error("TinyUrlService.GetByTinyRouteList server error.", zap.Error(err), zap.Strings("input", []string{tinyStr}))
 			response.ServiceFail(c)
@@ -30,6 +32,12 @@ func TinyUrlRedirect() gin.HandlerFunc {
 			return
 		}
 
-		c.Redirect(http.StatusTemporaryRedirect, tinyList[0].OriginalUrl)
+		// 校验是否超时，超时后不允许访问
+		if time.Now().After(tinyInfo.LimitAccessTime) {
+			response.FailByError(c, types.HandlerErrors.NotFound)
+		}
+
+		c.Redirect(http.StatusTemporaryRedirect, tinyInfo.OriginalUrl)
+		return
 	}
 }

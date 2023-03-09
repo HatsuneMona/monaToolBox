@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -14,4 +15,5 @@ var (
 	ConfigViper *viper.Viper
 	DB          *gorm.DB
 	Redis       *redis.Client
+	MemCached   *memcache.Client
 )
