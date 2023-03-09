@@ -15,7 +15,7 @@ func InitConfig() *viper.Viper {
 		// TODO log
 		panic(err)
 	}
-	configPath := homeDir + "/.monaPanel/"
+	configPath := homeDir + "/.monaToolBox/"
 
 	appPath, err := os.Getwd()
 	if err != nil {
