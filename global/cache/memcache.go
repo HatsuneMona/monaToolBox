@@ -104,7 +104,7 @@ func (mc *cacheMc) GetMulti(keys []string) (map[string][]byte, error) {
 
 	result := make(map[string][]byte)
 	for key, i := range gets {
-		result[key] = i.Value
+		result[key[len(mc.prefix):]] = i.Value // 把前缀去掉
 	}
 	return result, nil
 }
