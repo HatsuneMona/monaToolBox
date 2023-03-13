@@ -92,19 +92,19 @@ func (mc *cacheMc) GetMulti(keys []string) (map[string][]byte, error) {
 	if len(keys) < 1 {
 		return nil, errors.New("input error")
 	}
-	count := len(keys)
-	for i := 0; i < count; i++ {
-		keys[i] = mc.buildKey(keys[i])
+	realKeys := make([]string, 0, len(keys))
+	for _, key := range keys {
+		realKeys = append(realKeys, mc.buildKey(key))
 	}
 
-	gets, err := mc.c.GetMulti(keys)
+	gets, err := mc.c.GetMulti(realKeys)
 	if err != nil {
 		return nil, err
 	}
 
 	result := make(map[string][]byte)
 	for key, i := range gets {
-		result[key] = i.Value
+		result[key[len(mc.prefix):]] = i.Value // 把前缀去掉
 	}
 	return result, nil
 }
