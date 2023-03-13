@@ -68,7 +68,7 @@ func Add() gin.HandlerFunc {
 		}
 
 		// 检查存在性
-		if err, tinyUrlInfos := TinyUrlService.GetByTinyRouteList([]string{form.TinyUrl}); err != nil {
+		if err, tinyUrlInfos := TinyUrlService.GetByTinyRouteList([]string{form.TinyUrl}, true); err != nil {
 			global.Log.Error("TinyUrlService.GetByTinyRouteList server error.", zap.Error(err), zap.Strings("input", []string{form.TinyUrl}))
 			response.ServiceFail(c)
 			return

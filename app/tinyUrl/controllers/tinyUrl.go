@@ -21,8 +21,7 @@ func TinyUrlRedirect() gin.HandlerFunc {
 			return
 		}
 
-		err, tinyList := TinyUrlService.GetByTinyRouteList([]string{tinyStr})
-		tinyInfo := tinyList[0]
+		err, tinyList := TinyUrlService.GetByTinyRouteList([]string{tinyStr}, false)
 		if err != nil {
 			global.Log.Error("TinyUrlService.GetByTinyRouteList server error.", zap.Error(err), zap.Strings("input", []string{tinyStr}))
 			response.ServiceFail(c)
@@ -31,6 +30,7 @@ func TinyUrlRedirect() gin.HandlerFunc {
 			response.FailByError(c, types.HandlerErrors.NotFound)
 			return
 		}
+		tinyInfo := tinyList[0]
 
 		// 校验是否超时，超时后不允许访问
 		if time.Now().After(tinyInfo.LimitAccessTime) {
