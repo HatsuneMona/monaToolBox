@@ -2,6 +2,7 @@
 package utils
 
 import (
+	"bytes"
 	"math/rand"
 	"time"
 )
@@ -18,4 +19,15 @@ func RandString(length int) string {
 		bytes[i] = byteMap[r.Intn(randLen)]
 	}
 	return string(bytes)
+}
+
+// BuildString 通过 bytes.Buffer 创建字符串
+func BuildString(s ...string) string {
+	var buf bytes.Buffer
+
+	for _, str := range s {
+		buf.WriteString(str)
+	}
+
+	return buf.String()
 }
